@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+		<title>Builder</title>
+		<script src="player.js"></script>
+		<script src="buildings.js"></script>
+		<script src="index.js"></script>
+
+		<style>
+			th,
+			td {
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body style="margin: 0; padding: 0;">
+		<h4>ExcecuteTime: <span id="fps"></span></h4>
+		<h4>Time:<span id="time"></span></h4>
+		<h4>day:<span id="day"></span></h4>
+		<h4 id="entAmount"></h4>
+		<h4 id="tax"></h4>
+		<div>
+			<div>
+				<button onclick="selectBuilder('pointer')" class="w3-button w3-green">
+					Pointer
+				</button>
+				<button onclick="selectBuilder('road')" class="w3-button w3-green">
+					Road
+				</button>
+				<button onclick="selectBuilder('factory')" class="w3-button w3-green">
+					Factory
+				</button>
+				<button onclick="selectBuilder('shop')" class="w3-button w3-green">
+					Shop
+				</button>
+				<button onclick="selectBuilder('house')" class="w3-button w3-green">
+					House
+				</button>
+
+				<h4>building selected: <span id="selected">None</span></h4>
+			</div>
+		</div>
+		<div>
+			<div>
+				<button onclick="save()" class="w3-button w3-green">save</button>
+				<button onclick="load()" class="w3-button w3-red" disabled>load</button>
+			</div>
+		</div>
+		<table class="w3-table">
+			<tbody id="ents"></tbody>
+		</table>
+	</body>
+</html>
