@@ -99,6 +99,10 @@ var GameArea = {
 								}
 
 								break;
+							case 'demo':
+								demoBuilding(el.getPos());
+
+								break;
 
 							default:
 								selected = null;
@@ -297,6 +301,24 @@ function selectBuilder(type) {
 	document.getElementById('selected').innerHTML = type;
 }
 
+function demoBuilding(pos) {
+	for (var i = 0; i < factorys.length; i++) {
+		if (factorys[i].getPos().x == pos.x && factorys[i].getPos().y == pos.y) {
+			factorys.splice(i, 1);
+		}
+	}
+	for (var i = 0; i < homes.length; i++) {
+		if (homes[i].getPos().x == pos.x && homes[i].getPos().y == pos.y) {
+			homes.splice(i, 1);
+		}
+	}
+	for (var i = 0; i < shops.length; i++) {
+		if (shops[i].getPos().x == pos.x && shops[i].getPos().y == pos.y) {
+			shops.splice(i, 1);
+		}
+	}
+}
+
 function save() {
 	var save = {
 		GameArea: GameArea,
@@ -343,7 +365,7 @@ function Init() {
 
 	if (debug) {
 		homes.push(new Home(0, 0, homeTexture));
-		factorys.push(new Factory(32, 0, factoryTexture));
+		factorys.push(new Factory(32, 32, factoryTexture));
 		shops.push(new Shop(64, 0, shopTexture));
 	}
 }
