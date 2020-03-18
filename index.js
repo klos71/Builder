@@ -4,20 +4,21 @@ var enteties = [];
 var factorys = [];
 var homes = [];
 var shops = [];
+var GlobalBuildings = [];
 var floorTexture = new Image(32, 32);
-floorTexture.src = 'floor.png';
+floorTexture.src = 'images/floor.png';
 var floorHoverTexture = new Image(32, 32);
-floorHoverTexture.src = 'floorHover.png';
+floorHoverTexture.src = 'images/floorHover.png';
 var factoryTexture = new Image(32, 32);
-factoryTexture.src = 'factory.png';
+factoryTexture.src = 'images/factory.png';
 var shopTexture = new Image(32, 32);
-shopTexture.src = 'shop.png';
+shopTexture.src = 'images/shop.png';
 var homeTexture = new Image(32, 32);
-homeTexture.src = 'Home.png';
+homeTexture.src = 'images/Home.png';
 var personTexture = new Image(32, 32);
-personTexture.src = 'person.png';
+personTexture.src = 'images/person.png';
 var roadTexture = new Image(32, 32);
-roadTexture.src = 'road.png';
+roadTexture.src = 'images/road.png';
 
 var Tutorial = localStorage.getItem('t1') ? false : true;
 //house
@@ -40,21 +41,33 @@ var GameArea = {
 
 		this.context = this.canvas.getContext('2d', { alpha: false });
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-		this.interval = setInterval(update, 20);
+		this.interval = setInterval(update, 40);
+		this.canvas.oncontextmenu = function(e) {
+			e.preventDefault();
+			selectBuilder('pointer');
+		};
+		window.onresize = e => {
+			this.canvas.width = e.target.innerWidth;
+			this.backGround();
+		};
 
-		this.canvas.addEventListener('mousedown', e => {
+		this.canvas.addEventListener('click', e => {
 			backGroundTiles.forEach(el => {
 				if (e.clientX > el.getPos().x && e.clientX < el.getPos().x + 32) {
 					if (e.clientY > el.getPos().y && e.clientY < el.getPos().y + 32) {
 						switch (selected) {
 							case 'house':
-								if (GameArea.taxMoney >= 100) {
+								if (
+									GameArea.taxMoney >= 100 &&
+									getBuildingOnTile(e.clientX, e.clientY)
+								) {
 									if (Tutorial2) {
 										alert(
 											"Good now let's build a factory, select the factory and build it, the house will spawn an ent to work there"
 										);
 										localStorage.setItem('t2', false);
 									}
+
 									homes.push(
 										new Home(el.getPos().x, el.getPos().y, homeTexture)
 									);
@@ -63,7 +76,10 @@ var GameArea = {
 
 								break;
 							case 'factory':
-								if (GameArea.taxMoney >= 1000) {
+								if (
+									GameArea.taxMoney >= 1000 &&
+									getBuildingOnTile(e.clientX, e.clientY)
+								) {
 									if (Tutorial3) {
 										alert(
 											"Good now let's build a shop, select the shop and build it, the ent will need food to statisfy it's hunger"
@@ -78,7 +94,10 @@ var GameArea = {
 
 								break;
 							case 'shop':
-								if (GameArea.taxMoney >= 500) {
+								if (
+									GameArea.taxMoney >= 500 &&
+									getBuildingOnTile(e.clientX, e.clientY)
+								) {
 									if (Tutorial4) {
 										alert(
 											'Well done, now continue to expand the world, the roads makes the ents go faster. The tutorial is now over'
@@ -93,7 +112,10 @@ var GameArea = {
 
 								break;
 							case 'road':
-								if (GameArea.taxMoney >= 10) {
+								if (
+									GameArea.taxMoney >= 10 &&
+									getBuildingOnTile(e.clientX, e.clientY)
+								) {
 									el.setRoad();
 									GameArea.taxMoney += -10;
 								}
@@ -139,6 +161,7 @@ var GameArea = {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	},
 	backGround: function() {
+		backGroundTiles = [];
 		for (var x = 0; x < this.canvas.width; x += 32) {
 			for (var y = 0; y < this.canvas.height; y += 32) {
 				backGroundTiles.push(new backGroundTile(x, y, floorTexture));
@@ -206,6 +229,25 @@ class backGroundTile extends component {
 			this.Image = this.defaultImage;
 		}
 	}
+}
+
+function getBuildingOnTile(x, y) {
+	GlobalBuildings.push(homes, factorys, shops);
+	let colision = false;
+	GlobalBuildings.forEach(el => {
+		el.forEach(building => {
+			if (
+				x > building.getPos().x &&
+				x < building.getPos().x + 32 &&
+				y > building.getPos().y &&
+				y < building.getPos().y + 32
+			) {
+				colision = true;
+			}
+		});
+	});
+	return !colision;
+	GlobalBuildings = [];
 }
 
 function update() {
@@ -284,19 +326,19 @@ function selectBuilder(type) {
 	selected = type;
 	switch (selected) {
 		case 'house':
-			floorHoverTexture.src = 'Home.png';
+			floorHoverTexture.src = 'images/Home.png';
 			break;
 		case 'shop':
-			floorHoverTexture.src = 'shop.png';
+			floorHoverTexture.src = 'images/shop.png';
 			break;
 		case 'factory':
-			floorHoverTexture.src = 'factory.png';
+			floorHoverTexture.src = 'images/factory.png';
 			break;
 		case 'road':
-			floorHoverTexture.src = 'road.png';
+			floorHoverTexture.src = 'images/road.png';
 			break;
 		default:
-			floorHoverTexture.src = 'floorHover.png';
+			floorHoverTexture.src = 'images/floorHover.png';
 	}
 	document.getElementById('selected').innerHTML = type;
 }

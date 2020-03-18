@@ -18,43 +18,40 @@
 		</style>
 	</head>
 	<body style="margin: 0; padding: 0;">
-		<h4>ExcecuteTime: <span id="fps"></span></h4>
-		<h4>Time:<span id="time"></span></h4>
-		<h4>day:<span id="day"></span></h4>
-		<h4 id="entAmount"></h4>
-		<h4 id="tax"></h4>
-		<div>
+		<div style="margin-left: 1rem; margin-right: 1rem;">
+			<h4>ExcecuteTime: <span id="fps"></span></h4>
+			<h4>Time:<span id="time"></span></h4>
+			<h4>day:<span id="day"></span></h4>
+			<h4 id="entAmount"></h4>
+			<h4 id="tax"></h4>
 			<div>
-				<button onclick="selectBuilder('pointer')" class="w3-button w3-green">
-					Pointer
-				</button>
-				<button onclick="selectBuilder('demo')" class="w3-button w3-green">
-					Demolish
-				</button>
-				<button onclick="selectBuilder('road')" class="w3-button w3-green">
-					Road
-				</button>
-				<button onclick="selectBuilder('factory')" class="w3-button w3-green">
-					Factory
-				</button>
-				<button onclick="selectBuilder('shop')" class="w3-button w3-green">
-					Shop
-				</button>
-				<button onclick="selectBuilder('house')" class="w3-button w3-green">
-					House
-				</button>
+				<div>
+					<button onclick="selectBuilder('pointer')" class="w3-button w3-green">
+						Pointer
+					</button>
+					<button onclick="selectBuilder('demo')" class="w3-button w3-green">
+						Demolish
+					</button>
+					<button onclick="selectBuilder('road')" class="w3-button w3-green">
+						Road
+					</button>
+					<button onclick="selectBuilder('factory')" class="w3-button w3-green">
+						Factory
+					</button>
+					<button onclick="selectBuilder('shop')" class="w3-button w3-green">
+						Shop
+					</button>
+					<button onclick="selectBuilder('house')" class="w3-button w3-green">
+						House
+					</button>
 
-				<h4>building selected: <span id="selected">None</span></h4>
+					<h4>Building selected: <span id="selected">None</span></h4>
+				</div>
 			</div>
+			<div></div>
+			<table class="w3-table">
+				<tbody id="ents"></tbody>
+			</table>
 		</div>
-		<div>
-			<div>
-				<button onclick="save()" class="w3-button w3-green">save</button>
-				<button onclick="load()" class="w3-button w3-red" disabled>load</button>
-			</div>
-		</div>
-		<table class="w3-table">
-			<tbody id="ents"></tbody>
-		</table>
 	</body>
 </html>
